@@ -113,6 +113,7 @@ Incluye constraints de host, versión HTTP, métodos, tamaño de cabeceras y par
 | Acceso a `itla.edu.do` | ✅ Bloqueado por Web/DNS Filter |
 | Acceso a `facebook.com` | ✅ Bloqueado por Web Filter |
 | Acceso a `instagram.com` | ✅ Bloqueado por Web Filter |
+| Escaneo Nmap desde LAN hacia servidor web | ✅ Solo puerto 80/HTTP abierto; FTP, SSH, Telnet, HTTPS, MySQL, RDP y 8080 filtrados |
 | Logs Forward Traffic | ✅ HTTP Accept + UTM Blocked evidenciados |
 
 ---
@@ -168,18 +169,21 @@ Incluye constraints de host, versión HTTP, métodos, tamaño de cabeceras y par
 - 📸 [Captura 28 — Prueba HTTP en navegador (Directory listing)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/28_Prueba_HTTP_Navegador.png)
 - 📸 [Captura 29 — Ping bloqueado al servidor e Internet/NAT OK](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/29_Prueba_Ping_Bloqueado_Internet_OK.png)
 
+### Prueba de Escaneo de Puertos
+- 📸 [Captura 30 — Escaneo Nmap: solo puerto 80 abierto, resto filtrado](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/30_escaneodepuertos%20.png)
+
 ### Bloqueos y Logs
-- 📸 [Captura 30 — Bloqueo de itla.edu.do](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/30_Bloqueo_ITLA.png)
 - 📸 [Captura 31 — Bloqueo de facebook.com](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/31_Bloqueo_Facebook.png)
 - 📸 [Captura 32 — Bloqueo de instagram.com](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/32_Bloqueo_Instagram.png)
-- 📸 [Captura 33 — Logs de tráfico (HTTP Accept + UTM Blocked)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/33_Logs_HTTP_Accept_Deny.png)
+- 📸 [Captura 33 — Bloqueo de itla.edu.do](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/33_Bloqueo_ITLA.png)
+- 📸 [Captura 34 — Logs de tráfico (HTTP Accept + UTM Blocked)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/34_Logs_HTTP_Accept_Deny.png)
 
 ---
 
 ## 📎 Recursos
 
 📄 **Documentación Técnica:** [Ver Informe PDF](SaelGerman_2025-0725_FortiGate_P2.pdf)  
-▶️ **Video Demostración:** [Ver en YouTube](https://youtu.be/Ah3hmVkDiIQ?si=Ezpx7NdP2yc5AfLC)
+▶️ **Video Demostración:** [Ver en YouTube](https://youtu.be/iqo2pbR7nd0)
 
 ---
 
