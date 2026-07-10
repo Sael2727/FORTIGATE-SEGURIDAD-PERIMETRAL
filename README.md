@@ -70,8 +70,6 @@ FortiGate actúa como firewall perimetral con tres zonas: WAN hacia Internet, LA
 ## 🛡️ Perfiles de Seguridad UTM
 
 ### Web Filter — `WF_BLOQUEOS`
-Bloquea acceso a dominios mediante categorías y entradas estáticas:
-
 | Dominio bloqueado | Motivo |
 |:-----------------:|--------|
 | facebook.com | Red social |
@@ -82,20 +80,16 @@ Bloquea acceso a dominios mediante categorías y entradas estáticas:
 | itla.edu.do y subdominios | Dominio institucional |
 
 ### DNS Filter — `DNS_BLOQUEOS`
-Redirige al portal de bloqueo los dominios y subdominios:
-`itla.edu.do`, `facebook.com`, `instagram.com`, `tiktok.com`, `whatsapp.com`, `whatsapp.net`, `wa.me` y sus wildcards.
+Redirige al portal de bloqueo: `itla.edu.do`, `facebook.com`, `instagram.com`, `tiktok.com`, `whatsapp.com`, `whatsapp.net`, `wa.me` y sus wildcards.
 
 ### Application Control — `APP_BLOCK_WHATSAPP`
-Bloquea a nivel de aplicación:
-`WhatsApp`, `WhatsApp_Web`, `WhatsApp_VoIPCall`, `WhatsApp_File_Transfer`.
+Bloquea: `WhatsApp`, `WhatsApp_Web`, `WhatsApp_VoIPCall`, `WhatsApp_File_Transfer`.
 
 ### Intrusion Prevention — `IPS_BLOCK_SCANNERS`
-Detecta y bloquea firmas de severidad **media, alta y crítica** para escaneos de red y comportamientos maliciosos.
+Bloquea firmas de severidad **media, alta y crítica** para escaneos de red y comportamientos maliciosos.
 
 ### Web Application Firewall — `WAF_WEB_SERVER`
-Protege el servidor web `10.7.25.130` contra:
-`Cross Site Scripting (XSS)`, `SQL Injection`, `Generic Attacks`, `Trojans`, `Known Exploits`.
-Incluye constraints de host, versión HTTP, métodos, tamaño de cabeceras y parámetros.
+Protege `10.7.25.130` contra: `Cross Site Scripting (XSS)`, `SQL Injection`, `Generic Attacks`, `Trojans`, `Known Exploits`. Incluye constraints de host, versión HTTP, métodos y tamaño de parámetros.
 
 ---
 
@@ -104,17 +98,17 @@ Incluye constraints de host, versión HTTP, métodos, tamaño de cabeceras y par
 | Prueba | Resultado |
 |:------:|:---------:|
 | Cliente-Linux recibe IP `10.7.25.10/25` por DHCP | ✅ |
-| Servidor-Web tiene IP estática `10.7.25.130/28` | ✅ |
-| Acceso HTTP `http://10.7.25.130` → HTTP 200 OK | ✅ Permitido |
-| `wget http://10.7.25.130` desde Cliente-Linux | ✅ HTTP 200 OK |
-| Acceso en navegador a `http://10.7.25.130` | ✅ Directory listing visible |
-| Ping al servidor `10.7.25.130` desde LAN | ✅ Bloqueado (solo HTTP permitido) |
+| Servidor-Web IP estática `10.7.25.130/28` con Python HTTP activo | ✅ |
+| `wget http://10.7.25.130` → HTTP 200 OK | ✅ Permitido |
+| Acceso en navegador a `http://10.7.25.130` | ✅ Visible |
+| Ping al servidor `10.7.25.130` desde LAN | ✅ Bloqueado |
 | Ping a `8.8.8.8` desde LAN | ✅ Exitoso (NAT funciona) |
-| Acceso a `itla.edu.do` | ✅ Bloqueado por Web/DNS Filter |
-| Acceso a `facebook.com` | ✅ Bloqueado por Web Filter |
-| Acceso a `instagram.com` | ✅ Bloqueado por Web Filter |
-| Escaneo Nmap desde LAN hacia servidor web | ✅ Solo puerto 80/HTTP abierto; FTP, SSH, Telnet, HTTPS, MySQL, RDP y 8080 filtrados |
-| Logs Forward Traffic | ✅ HTTP Accept + UTM Blocked evidenciados |
+| Bloqueo de `itla.edu.do` | ✅ Página de bloqueo FortiGate |
+| Bloqueo de `facebook.com` | ✅ Página de bloqueo FortiGate |
+| Bloqueo de `instagram.com` | ✅ Página de bloqueo FortiGate |
+| Log HTTP permitido hacia servidor (USERS_TO_WEB_HTTP_ONLY) | ✅ Visible en Forward Traffic |
+| Log UTM Blocked para instagram.com | ✅ Visible en Forward Traffic |
+| Escaneo Nmap: solo puerto 80 abierto, resto filtrado | ✅ |
 
 ---
 
@@ -129,61 +123,61 @@ Incluye constraints de host, versión HTTP, métodos, tamaño de cabeceras y par
 ## 🖼️ Capturas de Pantalla
 
 ### Topología y Feature Visibility
-- 📸 [Captura 1 — Topología general de seguridad perimetral](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/01_Topologia_Seguridad_Perimetral.png)
-- 📸 [Captura 2 — Feature Visibility: funciones principales](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/02_Feature_Visibility_Parte_1.png)
-- 📸 [Captura 3 — Feature Visibility: opciones adicionales](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/03_Feature_Visibility_Parte_2.png)
+- 📸 [Captura 1 — Topología general de seguridad perimetral](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/01_Topologia_general.png)
+- 📸 [Captura 2 — Feature Visibility: funciones principales](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/02_Feature_Visibility_funciones_principales.png)
+- 📸 [Captura 3 — Feature Visibility: opciones adicionales](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/03_Feature_Visibility_opciones_adicionales.png)
 
 ### Interfaces, DHCP, Ruta y Políticas
-- 📸 [Captura 4 — Interfaces configuradas en FortiGate](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/04_Interfaces_FortiGate.png)
-- 📸 [Captura 5 — DHCP Server en LAN_USUARIOS](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/05_DHCP_LAN_USUARIOS.png)
-- 📸 [Captura 6 — Ruta por defecto](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/06_Ruta_Default.png)
-- 📸 [Captura 7 — Políticas firewall principales](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/07_Firewall_Policies.png)
+- 📸 [Captura 4 — Interfaces configuradas en FortiGate](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/04_Interfaces_configuradas_FortiGate.png)
+- 📸 [Captura 5 — DHCP Server en LAN_USUARIOS](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/05_DHCP_Server_LAN_USUARIOS.png)
+- 📸 [Captura 6 — Ruta por defecto](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/06_Ruta_por_defecto.png)
+- 📸 [Captura 7 — Políticas firewall principales](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/07_Politicas_firewall_principales.png)
 
 ### Web Filter y DNS Filter
-- 📸 [Captura 8 — Web Filter: redes sociales (Parte 1)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/08_Web_Filter_Redes_Sociales_Parte_1.png)
-- 📸 [Captura 9 — Web Filter: WhatsApp e ITLA](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/09_Web_Filter_WhatsApp_ITLA.png)
-- 📸 [Captura 10 — Web Filter: confirmación de entradas](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/10_Web_Filter_Tiktok_WhatsApp.png)
-- 📸 [Captura 11 — DNS Filter: dominios bloqueados (Parte 1)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/11_DNS_Filter_Dominios_Parte_1.png)
-- 📸 [Captura 12 — DNS Filter: WhatsApp y wa.me (Parte 2)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/12_DNS_Filter_WhatsApp_Parte_2.png)
+- 📸 [Captura 8 — Web Filter: redes sociales](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/08_Web_Filter_redes_sociales.png)
+- 📸 [Captura 9 — Web Filter: WhatsApp e ITLA](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/09_Web_Filter_WhatsApp_ITLA.png)
+- 📸 [Captura 10 — Web Filter: confirmación de entradas](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/10_Web_Filter_confirmacion_entradas.png)
+- 📸 [Captura 11 — DNS Filter: dominios bloqueados](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/11_DNS_Filter_dominios_bloqueados.png)
+- 📸 [Captura 12 — DNS Filter: WhatsApp y wa.me](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/12_DNS_Filter_WhatsApp_wa_me.png)
 
 ### Application Control, IPS y WAF
-- 📸 [Captura 13 — Application Control: perfil APP_BLOCK_WHATSAPP](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/13_Application_Control_Perfil.png)
-- 📸 [Captura 14 — Application Control: aplicaciones bloqueadas](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/14_Application_Control_WhatsApp_Blocked_Apps.png)
-- 📸 [Captura 15 — Intrusion Prevention: perfil IPS_BLOCK_SCANNERS](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/15_IPS_Profile_List.png)
-- 📸 [Captura 16 — IPS_BLOCK_SCANNERS: severidades bloqueadas](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/16_IPS_BLOCK_SCANNERS.png)
-- 📸 [Captura 17 — WAF: perfil WAF_WEB_SERVER creado](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/17_WAF_Profile_List.png)
-- 📸 [Captura 18 — WAF: firmas de protección](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/18_WAF_WEB_SERVER_Signatures.png)
-- 📸 [Captura 19 — WAF: restricciones y métodos HTTP](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/19_WAF_WEB_SERVER_Constraints.png)
+- 📸 [Captura 13 — Application Control: perfil APP_BLOCK_WHATSAPP](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/13_Application_Control_perfil_WhatsApp.png)
+- 📸 [Captura 14 — Application Control: aplicaciones bloqueadas](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/14_Application_Control_aplicaciones_bloqueadas.png)
+- 📸 [Captura 15 — Intrusion Prevention: perfil IPS_BLOCK_SCANNERS](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/15_Intrusion_Prevention_perfil_IPS.png)
+- 📸 [Captura 16 — IPS_BLOCK_SCANNERS: severidades bloqueadas](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/16_IPS_BLOCK_SCANNERS_severidades_bloqueadas.png)
+- 📸 [Captura 17 — WAF: perfil WAF_WEB_SERVER creado](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/17_WAF_WEB_SERVER_perfil_creado.png)
+- 📸 [Captura 18 — WAF: firmas de protección](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/18_WAF_firmas_de_proteccion.png)
+- 📸 [Captura 19 — WAF: restricciones y métodos HTTP](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/19_WAF_restricciones_metodos_HTTP.png)
 
 ### Políticas con Perfiles Aplicados
-- 📸 [Captura 20 — Política HTTP: origen, destino y acción](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/20_Policy_USERS_TO_WEB_HTTP_ONLY_General.png)
-- 📸 [Captura 21 — Política HTTP: IPS y WAF aplicados](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/21_Policy_USERS_TO_WEB_HTTP_ONLY_WAF_IPS.png)
-- 📸 [Captura 22 — Política de Internet: origen y NAT](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/22_Policy_LAN_USERS_TO_INTERNET_General.png)
-- 📸 [Captura 23 — Política de Internet: perfiles UTM](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/23_Policy_LAN_USERS_TO_INTERNET_Security_Profiles.png)
+- 📸 [Captura 20 — Política HTTP: origen, destino y acción](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/20_Politica_HTTP_origen_destino_accion.png)
+- 📸 [Captura 21 — Política HTTP: IPS y WAF aplicados](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/21_Politica_HTTP_IPS_WAF_aplicados.png)
+- 📸 [Captura 22 — Política de Internet: origen y NAT](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/22_Politica_Internet_origen_NAT.png)
+- 📸 [Captura 23 — Política de Internet: perfiles UTM](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/23_Politica_Internet_perfiles_UTM.png)
 
 ### Pruebas en Cliente y Servidor
-- 📸 [Captura 24 — Cliente-Linux: IP por DHCP y ruta](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/24_Cliente_Linux_DHCP_IP_Route.png)
-- 📸 [Captura 25 — Servidor-Web: configuración de red y servicio HTTP](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/25_Servidor_Web_IP_Route.png)
-- 📸 [Captura 26 — Servidor-Web: IP estática y Python HTTP server](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/26_Servidor_Web_HTTP_Server.png)
-- 📸 [Captura 27 — Prueba HTTP con wget (HTTP 200 OK)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/27_Prueba_HTTP_wget.png)
-- 📸 [Captura 28 — Prueba HTTP en navegador (Directory listing)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/28_Prueba_HTTP_Navegador.png)
-- 📸 [Captura 29 — Ping bloqueado al servidor e Internet/NAT OK](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/29_Prueba_Ping_Bloqueado_Internet_OK.png)
-
-### Prueba de Escaneo de Puertos
-- 📸 [Captura 30 — Escaneo Nmap: solo puerto 80 abierto, resto filtrado](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/30_escaneodepuertos%20.png)
+- 📸 [Captura 24 — Cliente-Linux: IP por DHCP](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/24_Cliente_Linux_IP_por_DHCP.png)
+- 📸 [Captura 25 — Servidor-Web: configuración de red y servicio HTTP](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/25_Servidor_Web_configuracion_red_servicio_HTTP.png)
+- 📸 [Captura 26 — Prueba HTTP con wget (HTTP 200 OK)](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/26_Prueba_HTTP_wget_servidor_web.png)
+- 📸 [Captura 27 — Prueba HTTP en navegador](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/27_Prueba_HTTP_navegador.png)
+- 📸 [Captura 28 — Ping al servidor bloqueado e Internet/NAT funcionando](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/28_Prueba_ping_bloqueado_Internet.png)
 
 ### Bloqueos y Logs
-- 📸 [Captura 31 — Bloqueo de facebook.com](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/31_Bloqueo_Facebook.png)
-- 📸 [Captura 32 — Bloqueo de instagram.com](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/32_Bloqueo_Instagram.png)
-- 📸 [Captura 33 — Bloqueo de itla.edu.do](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/33_Bloqueo_ITLA.png)
-- 📸 [Captura 34 — Logs de tráfico (HTTP Accept + UTM Blocked)](SaelGerman_2025-0725_Capturas/SaelGerman_2025-0725_Imagenes_P1/34_Logs_HTTP_Accept_Deny.png)
+- 📸 [Captura 29 — Bloqueo de itla.edu.do](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/29_Bloqueo_itla_edu_do.png)
+- 📸 [Captura 30 — Bloqueo de facebook.com](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/30_Bloqueo_facebook_com.png)
+- 📸 [Captura 31 — Bloqueo de instagram.com](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/31_Bloqueo_instagram_com.png)
+- 📸 [Captura 32 — Log de HTTP permitido hacia servidor web](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/32_Log_HTTP_permitido_servidor_web.png)
+- 📸 [Captura 33 — Logs de bloqueo de instagram.com por UTM](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/33_Logs_bloqueo_instagram_UTM.png)
+
+### Prueba de Escaneo de Puertos
+- 📸 [Captura 34 — Escaneo Nmap: solo puerto 80 abierto, resto filtrado](SaelGerman_2025-0725_Fotos_Documento_FortiGate_P2_GitHub/34_Prueba_escaneo_puertos_Nmap.png)
 
 ---
 
 ## 📎 Recursos
 
 📄 **Documentación Técnica:** [Ver Informe PDF](SaelGerman_2025-0725_FortiGate_P2.pdf)  
-▶️ **Video Demostración:** [Ver en YouTube](https://youtu.be/iqo2pbR7nd0)
+▶️ **Video Demostración:** [Ver en YouTube](https://youtu.be/iqo2pbR7nd0?si=jOpn6T1zWkGmImRy)
 
 ---
 
